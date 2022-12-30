@@ -128,6 +128,11 @@ void _move(int M[], int n, int N[], int Q[])
     draw(N, n, Q);
 }
 
+int min(int x, int y) 
+{ 
+    return (x < y) ? x : y; 
+}
+
 void merge(int M[], int l, int m, int r, int n)
 {
     char str[100];
@@ -207,14 +212,18 @@ void merge(int M[], int l, int m, int r, int n)
     _move(M, n, B, C);
 }
 
-void mergeSort(int M[], int l, int r, int n)
-{    
-    if (l < r) 
+void mergeSort(int M[], int n)
+{
+    int m;
+    int l;
+    for (m = 1; m <= n - 1; m = 2 * m)
     {
-        int m = l + (r - l) / 2;
-        mergeSort(M, l, m, n);
-        mergeSort(M, m + 1, r, n);
-        merge(M, l, m, r, n);
+        for (l = 0; l < n - 1; l += 2 * m)
+        {
+            int mid = min(l + m - 1, n - 1);
+            int right_end = min(l + 2 * m - 1, n - 1);
+            merge(M, l, mid, right_end, n);
+        }
     }
 }
 
